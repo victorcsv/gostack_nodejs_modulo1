@@ -1,7 +1,14 @@
 const express = require("express");
 const app = express();
 
-app.get("/", (req, res) => {
+const logMiddleware = (req, res, next) => {
+  console.log(
+    `HOST: ${req.headers.host} | URL: ${req.url} | METHOD: ${req.method}`
+  );
+  return next();
+};
+
+app.get("/", logMiddleware, (req, res) => {
   return res.send(`Bem-vindo, ${req.query.name}`);
 });
 
